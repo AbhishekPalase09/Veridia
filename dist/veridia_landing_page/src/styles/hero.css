@@ -1,0 +1,28 @@
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh; /* hero only */
+  z-index: 0;
+
+  background: linear-gradient(
+    90deg,
+    #d9c2ff 0%,
+    #f1c7a3 28%,
+    #f6f2ee 50%,
+    #f1c7a3 72%,
+    #d9c2ff 100%
+  );
+}
+
+/* subtle grain */
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.35;
+}
