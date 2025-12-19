@@ -1,5 +1,6 @@
 {
   "name": "veridia-landing-react",
+  "homepage": "https://username.github.io/repo-name",
   "version": "1.0.0",
   "private": true,
   "type": "module",
