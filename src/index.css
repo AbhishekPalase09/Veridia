@@ -1,0 +1,340 @@
+/* src/index.css */
+
+/* Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap');
+@import "./styles/hero.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===============================
+   ROOT + GLOBAL SAFETY
+   =============================== */
+
+:root {
+  --content-width: 1200px;
+  --site-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial;
+}
+
+/* VERY IMPORTANT:
+   Only hide horizontal overflow.
+   Do NOT touch vertical scrolling.
+*/
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--site-font);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: rgb(17,24,39);
+  margin: 0;
+}
+
+/* ===============================
+   HERO / BACKGROUND HELPERS
+   =============================== */
+
+/* grain texture */
+.grain {
+  background-image:
+    radial-gradient(rgba(0,0,0,0.018) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255,255,255,0.01), rgba(255,255,255,0));
+  background-size: 6px 6px, 100% 100%;
+}
+
+/* hero gradient — ONLY where used */
+.hero-full-bleed {
+  background-image:
+    linear-gradient(90deg,
+      rgba(233,217,255,0.18) 0%,
+      rgba(255,255,255,0.92) 44%,
+      rgba(255,195,145,0.14) 100%
+    ),
+    repeating-linear-gradient(90deg,
+      rgba(255,255,255,0.00) 0px,
+      rgba(255,255,255,0.01) 36px,
+      rgba(255,255,255,0.00) 72px
+    );
+   background-size: 100% 100%, 72px 60%;
+  background-position: top, top;
+  background-repeat: no-repeat, repeat;
+  filter: saturate(1.01);
+}
+
+/* ===============================
+   TYPOGRAPHY
+   =============================== */
+
+/* Use hero-title class on H1 in hero component */
+.hero-title {
+  font-size: clamp(34px, 6.8vw, 64px);
+  line-height: 1;
+  font-weight: 600;
+  letter-spacing: -0.7px;
+  margin-top: -1.5em;
+  /* preserve transform performance */
+  -webkit-font-smoothing: antialiased;
+  backface-visibility: hidden;
+}
+
+/* alternate tighter headline */
+.hero-title.tight {
+  letter-spacing: -1px;
+  font-weight: 800;
+}
+
+.hero-sub {
+  font-size: clamp(14px, 1.6vw, 20px);
+}
+
+/* ===============================
+   LAYOUT HELPERS
+   =============================== */
+
+.site-max {
+  max-width: var(--content-width);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* IMPORTANT:
+   Contain rotated / 3D content so it cannot cause horizontal scroll
+*/
+.overflow-x-clip {
+  overflow-x: hidden;
+}
+
+/* ===============================
+   COMPONENT HELPERS
+   =============================== */
+
+.gradient-border {
+  background: linear-gradient(
+    135deg,
+    rgba(139,92,246,0.9),
+    rgba(251,113,133,0.9),
+    rgba(249,115,22,0.9)
+  );
+  padding: 1px;
+  border-radius: 18px;
+}
+
+.inner-card {
+  border-radius: 16px;
+  background: white;
+  padding: 1.25rem;
+}
+
+.card-soft {
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+  background-clip: padding-box;
+}
+
+/* ===============================
+   MARQUEE / ANIMATIONS
+   =============================== */
+
+.marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+
+.marquee .track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 18s linear infinite;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0%); }
+  to   { transform: translateX(-100%); }
+}
+
+.word-highlight {
+  background: linear-gradient(90deg,#c7b3ff,#fbcfe8,#fdba74);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.2; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+
+/* ===============================
+   FORMS / ACCESSIBILITY
+   =============================== */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid rgba(59,130,246,0.2);
+  outline-offset: 2px;
+}
+
+/* ===============================
+   NAVBAR / RESPONSIVE HELPERS
+   =============================== */
+
+/* By default show desktop nav, hide hamburger icon */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* contact desktop visible by default */
+.contact-desktop {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* hamburger hidden by default */
+.hamburger-toggle {
+  display: none;
+}
+
+/* mobile menu (hidden by default) — we control via React state */
+.mobile-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 18px;
+  width: 260px;
+  max-width: calc(100% - 36px);
+  background: white;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.18);
+  padding: 16px;
+  z-index: 60;
+}
+
+/* mobile menu item spacing */
+.mobile-menu .mobile-link {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-align: left;
+}
+
+/* buttons inside mobile menu */
+.mobile-menu .btn-block {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* performance hint for animated items */
+.scroll-anim, .hero-animated {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ===============================
+   RESPONSIVE BREAKPOINTS
+   phone: <=809px
+   tablet: 810px - 1199px
+   desktop: >=1200px
+   =============================== */
+
+/* For screens <=1199px (tablet + phone):
+   - hide desktop nav and desktop contact
+   - show hamburger
+*/
+@media (max-width: 1199px) {
+  :root { --content-width: calc(100% - 2rem); }
+
+  .nav-links {
+    display: none !important;
+  }
+
+  .contact-desktop {
+    display: none !important;
+  }
+
+  .hamburger-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* make hero headline slightly larger on tablets so it fits like the design */
+  .hero-title {
+    font-size: clamp(28px, 8.6vw, 40px);
+    margin-top: -0.8em;
+  }
+
+  .site-max {
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+  }
+
+  /* reduce large rounded cards that cause overflow */
+  .card-soft {
+    padding: 1rem;
+  }
+}
+
+/* Phone specific (<=809px) */
+@media (max-width: 809px) {
+  .hero-title {
+    font-size: clamp(26px, 9.6vw, 36px);
+    margin-top: -0.6em;
+    text-align: center;
+    line-height: 1.05;
+  }
+
+  .hero-sub {
+    text-align: center;
+    margin-top: 0.5rem;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  .site-max {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  /* CTA button size better for phones — used by hero component */
+  .cta-fixed-size {
+    width: 160px !important;
+    height: 56px !important;
+  }
+}
+
+/* Large desktop tweaks */
+@media (min-width: 1400px) {
+  .grain {
+    background-size: 7px 7px, 1400px 100%;
+  }
+}
